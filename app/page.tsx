@@ -12,6 +12,17 @@ import PersonalityPassport from '../components/PersonalityPassport';
 import RarityBadge from '../components/RarityBadge';
 import CompatibilityChecker from '../components/CompatibilityChecker';
 
+async function downloadElementAsImage(elementId: string, filename: string) {
+  const { default: html2canvas } = await import('html2canvas');
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const canvas = await html2canvas(el, { backgroundColor: null, scale: 2 });
+  const link = document.createElement('a');
+  link.download = filename;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
 /** Floating background particles */
 const PARTICLES = Array.from({ length: 20 }, (_, i) => ({
   id: i,
@@ -313,11 +324,29 @@ export default function Home() {
           </div>
 
           {activeTab === 'passport' && (
-            <PersonalityPassport vibe={vibe} userName={quiz.userName} compatCode={compatCode} />
+            <div className="space-y-4">
+              <PersonalityPassport vibe={vibe} userName={quiz.userName} compatCode={compatCode} />
+              <div className="flex justify-center">
+                <button
+                  onClick={() => downloadElementAsImage('vibe-passport', `vibedna-passport-${vibe.code}.png`)}
+                  className="px-6 py-2.5 rounded-full text-sm font-semibold transition-all hover:scale-105 active:scale-95"
+                  style={{ background: `${vibe.orbColor}25`, color: vibe.textColor, border: `1px solid ${vibe.orbColor}40` }}
+                >
+                  ↓ Download Passport
+                </button>
+              </div>
+            </div>
           )}
           {activeTab === 'card' && (
-            <div className="flex justify-center">
+            <div className="flex flex-col items-center gap-4">
               <VibeCard vibe={vibe} userName={quiz.userName} compatCode={compatCode} />
+              <button
+                onClick={() => downloadElementAsImage('vibe-card', `vibedna-card-${vibe.code}.png`)}
+                className="px-6 py-2.5 rounded-full text-sm font-semibold transition-all hover:scale-105 active:scale-95"
+                style={{ background: `${vibe.orbColor}25`, color: vibe.textColor, border: `1px solid ${vibe.orbColor}40` }}
+              >
+                ↓ Download Card
+              </button>
             </div>
           )}
           {activeTab === 'compat' && (

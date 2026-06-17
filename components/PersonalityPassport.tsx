@@ -37,6 +37,7 @@ export default function PersonalityPassport({ vibe, userName, compatCode }: Pass
 
   return (
     <div
+      id="vibe-passport"
       className="relative w-full max-w-sm mx-auto rounded-2xl overflow-hidden"
       style={{
         background: 'linear-gradient(160deg, #0e0e0e 0%, #161616 100%)',
