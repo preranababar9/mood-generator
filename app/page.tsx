@@ -141,7 +141,7 @@ export default function Home() {
           <div className="mb-6 flex justify-center">
             <input
               type="text"
-              placeholder="Your name (optional)"
+              placeholder="Your name"
               value={quiz.userName}
               onChange={(e) => quiz.setUserName(e.target.value)}
               maxLength={20}
@@ -152,7 +152,8 @@ export default function Home() {
           {/* CTA */}
           <button
             onClick={quiz.startQuiz}
-            className="group px-10 cursor-pointer py-4 rounded-full text-black font-extrabold text-lg bg-white hover:bg-white/90 transition-all duration-200 hover:scale-105 active:scale-95 shadow-2xl"
+            disabled={!quiz.userName.trim()}
+            className="group px-10 py-4 rounded-full text-black font-extrabold text-lg bg-white transition-all duration-200 shadow-2xl disabled:opacity-40 disabled:cursor-not-allowed enabled:cursor-pointer enabled:hover:bg-white/90 enabled:hover:scale-105 enabled:active:scale-95"
           >
             Start Scan
             <span className="ml-2 inline-block transition-transform group-hover:translate-x-1">→</span>
